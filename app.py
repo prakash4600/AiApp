@@ -1,3 +1,6 @@
+import os
+from openai import OpenAI
+
 # ⚠️ WARNING: Do NOT hardcode keys in production
 AZURE_OPENAI_KEY = "AteKCBWIp6MdJApCAc6kSVRYlayZYx14D9AutRLhNSZwopcejz2fJQQJ99CBACYeBjFXJ3w3AAABACOGWxe6"
 AZURE_OPENAI_ENDPOINT = "https://myfirstaiapp.openai.azure.com/"
