@@ -2,8 +2,8 @@ import os
 from openai import AzureOpenAI
 
 # ⚠️ WARNING: Do NOT hardcode keys in production. Use env variables!
-AZURE_OPENAI_KEY = os.environ.get("AZURE_OPENAI_KEY")
-AZURE_OPENAI_ENDPOINT = os.environ.get("AZURE_OPENAI_ENDPOINT")
+AZURE_OPENAI_KEY = os.environ.get("AteKCBWIp6MdJApCAc6kSVRYlayZYx14D9AutRLhNSZwopcejz2fJQQJ99CBACYeBjFXJ3w3AAABACOGWxe6")
+AZURE_OPENAI_ENDPOINT = os.environ.get("https://myfirstaiapp.openai.azure.com/")
 
 # Initialize Azure OpenAI client
 client = AzureOpenAI(
