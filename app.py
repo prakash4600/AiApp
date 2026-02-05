@@ -1,11 +1,13 @@
 import os
 from openai import AzureOpenAI
 
-# ⚠️ WARNING: Do NOT hardcode keys in production. Use env variables!
-AZURE_OPENAI_KEY = os.environ.get("AteKCBWIp6MdJApCAc6kSVRYlayZYx14D9AutRLhNSZwopcejz2fJQQJ99CBACYeBjFXJ3w3AAABACOGWxe6")
-AZURE_OPENAI_ENDPOINT = os.environ.get("https://myfirstaiapp.openai.azure.com/")
+# Read from environment variables
+AZURE_OPENAI_KEY = os.environ.get("1BxVzsb78lleMXlGdNd6quSxnOZITtbS7zl2dG0rh8R60v8h5VMPJQQJ99CBACYeBjFXJ3w3AAABACOGZKSJ")
+AZURE_OPENAI_ENDPOINT = os.environ.get("https://demo324123423.openai.azure.com/")
 
-# Initialize Azure OpenAI client
+if not AZURE_OPENAI_KEY or not AZURE_OPENAI_ENDPOINT:
+    raise ValueError("Missing required environment variables")
+
 client = AzureOpenAI(
     api_key=AZURE_OPENAI_KEY,
     azure_endpoint=AZURE_OPENAI_ENDPOINT,
@@ -14,7 +16,7 @@ client = AzureOpenAI(
 
 def ask_llm(question):
     response = client.chat.completions.create(
-        model="gpt-4o-mini",  # This should be your Azure deployment name
+        model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": "You are a helpful DevOps assistant."},
             {"role": "user", "content": question}
