@@ -1,9 +1,12 @@
 import os
 from openai import AzureOpenAI
+from dotenv import load_dotenv
 
-# Read from environment variables
-AZURE_OPENAI_KEY = os.environ.get("1BxVzsb78lleMXlGdNd6quSxnOZITtbS7zl2dG0rh8R60v8h5VMPJQQJ99CBACYeBjFXJ3w3AAABACOGZKSJ")
-AZURE_OPENAI_ENDPOINT = os.environ.get("https://demo324123423.openai.azure.com/")
+# Load environment variables from .env file
+load_dotenv()
+
+AZURE_OPENAI_KEY = os.environ.get("AZURE_OPENAI_KEY")
+AZURE_OPENAI_ENDPOINT = os.environ.get("AZURE_OPENAI_ENDPOINT")
 
 if not AZURE_OPENAI_KEY or not AZURE_OPENAI_ENDPOINT:
     raise ValueError("Missing required environment variables")
