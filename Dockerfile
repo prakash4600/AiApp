@@ -7,7 +7,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy app code
-COPY app1.py .
+COPY app.py .
 
 # Run the app
 CMD ["python", "app.py"]
