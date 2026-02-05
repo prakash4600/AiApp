@@ -1,33 +1,34 @@
 import os
 from openai import AzureOpenAI
-from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
+endpoint = "https://bhanu-ml92txcy-eastus2.cognitiveservices.azure.com/"
+model_name = "gpt-4o-mini"
+deployment = "gpt-4o-mini"
 
-AZURE_OPENAI_KEY = os.environ.get("AZURE_OPENAI_KEY")
-AZURE_OPENAI_ENDPOINT = os.environ.get("AZURE_OPENAI_ENDPOINT")
-
-if not AZURE_OPENAI_KEY or not AZURE_OPENAI_ENDPOINT:
-    raise ValueError("Missing required environment variables")
+subscription_key = "6WlG5cOGtxMFAW6dkUUCskYgDi3JWFQUh9nGRM7EBiaJxl1pBxHTJQQJ99CBACHYHv6XJ3w3AAAAACOGmPFf"
+api_version = "2024-12-01-preview"
 
 client = AzureOpenAI(
-    api_key=AZURE_OPENAI_KEY,
-    azure_endpoint=AZURE_OPENAI_ENDPOINT,
-    api_version="2023-07-01-preview"
+    api_version=api_version,
+    azure_endpoint=endpoint,
+    api_key=subscription_key,
 )
 
-def ask_llm(question):
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "You are a helpful DevOps assistant."},
-            {"role": "user", "content": question}
-        ],
-        temperature=0.3
-    )
-    return response.choices[0].message.content
+response = client.chat.completions.create(
+    messages=[
+        {
+            "role": "system",
+            "content": "You are a helpful assistant.",
+        },
+        {
+            "role": "user",
+            "content": "I am going to Paris, what should I see?",
+        }
+    ],
+    max_tokens=4096,
+    temperature=1.0,
+    top_p=1.0,
+    model=deployment
+)
 
-if __name__ == "__main__":
-    question = "Explain Kubernetes ConfigMaps in simple words"
-    print("Answer:\n", ask_llm(question))
+print(response.choices[0].message.content)
