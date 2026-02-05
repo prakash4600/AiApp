@@ -22,7 +22,11 @@ response = client.chat.completions.create(
         },
         {
             "role": "user",
+<<<<<<< HEAD
             "content": "I am going to Paris, what should I see?",
+=======
+            "content": "Explain Kubernetes ConfigMaps in simple words?",
+>>>>>>> f18b1ee (Initial Azure OpenAI app code)
         }
     ],
     max_tokens=4096,
