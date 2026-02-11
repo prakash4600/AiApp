@@ -1,0 +1,49 @@
+name: Trigger auto deployment for aiapp
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/aiapp-AutoDeployTrigger-cdbd0aa5-ba77-4505-a61b-e2d0a9e16ec4.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+      contents: read #Required when GH token is used to authenticate with private repo
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AIAPP_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AIAPP_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AIAPP_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }}
+          _dockerfilePathKey_: _dockerfilePath_
+          _targetLabelKey_: _targetLabel_
+          registryUrl: aiapp460.azurecr.io
+          registryUsername: ${{ secrets.AIAPP_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.AIAPP_REGISTRY_PASSWORD }}
+          containerAppName: aiapp
+          resourceGroup: Test
+          imageToBuild: aiapp460.azurecr.io/aiapp:${{ github.sha }}
+          _buildArgumentsKey_: |
+            _buildArgumentsValues_
+
+
